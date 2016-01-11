@@ -1,0 +1,39 @@
+baseurl = "http://jettdurham.com/"
+languageCode = "en-us"
+title = "Jett's Awesome Blog"
+theme = "ghostwriter"
+
+# Pagination
+paginate = 5
+paginatePath = "page"
+
+[permalinks]
+    post = "/:year/:month/:day/:slug/"
+    code = "/:slug/"
+
+[taxonomies]
+    tag = "tags"
+    topic = "topics"
+
+[author]
+    name = "Jett Durham"
+    email = "jett@jettdurham.com"
+
+[params]
+  intro = true
+  headline = "Jett's Awesome Blog"
+  description = "I write, you read, everybody wins"
+  github = "https://github.com/thejettdurham"
+  linkedin = "https://linkedin.com/in/thejettmiller/"
+  twitter = "https://twitter.com/thejettdurham"
+  facebook = "https://facebook.com/thejettmiller"
+
+[[menu.main]]
+    name = "Blog"
+    url = "/"
+    weight = 1
+
+[[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 4
