@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ln -s hooks/* .git/hooks/
+ln -s $(pwd)/hooks/* $(pwd)/.git/hooks/
