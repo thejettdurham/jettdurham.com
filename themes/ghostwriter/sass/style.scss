@@ -2,9 +2,12 @@
 // Colours //
 // ============================================================ //
 
-$primary: #F03838;
-$secondary: #303030;
+$primary: #32BDBF;
+$secondary: #216263;
+$highlight: #CAFFF3;
+$footertext: #B9B9B9;
 $background: #FEFEFE;
+$stubhighlight: #DFFFFC;
 
 /* ============================================================ */
 /* Base */
@@ -112,13 +115,13 @@ table {
 }
 
 ::selection {
-    background: #FFF5B8;
+    background: $highlight;
     color: #000;
     display: block;
 }
 
 ::-moz-selection {
-    background: #FFF5B8;
+    background: $highlight;
     color: #000;
     display: block;
 }
@@ -384,7 +387,7 @@ table {
         padding: 20px 5px;
 
         &:hover {
-            background: #FCF5F5;
+            background: $stubhighlight;
             color: $primary;
             padding: 20px 12px;
 
@@ -520,14 +523,14 @@ table {
 }
 
 .footer-copyright {
-    color: #656565;
+    color: $footertext;
     font-size: 14px;
     margin: 0;
     text-align: center;
     text-transform: uppercase;
 
     a {
-        color: #656565;
+        color: $footertext;
         font-weight: 700;
 
         &:hover { color: #FEFEFE; }
