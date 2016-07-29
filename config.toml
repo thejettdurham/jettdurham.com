@@ -21,12 +21,12 @@ paginatePath = "page"
 
 [params]
   intro = true
-  headline = "Jett's Awesome Blog"
-  description = "I write, you read, everybody wins"
+  headline = "Jett's DevBlog"
+  description = "Musings on Software Development"
   github = "https://github.com/thejettdurham"
-  linkedin = "https://linkedin.com/in/thejettmiller/"
+  linkedin = "https://linkedin.com/in/thejettdurham/"
   twitter = "https://twitter.com/thejettdurham"
-  facebook = "https://facebook.com/thejettmiller"
+  facebook = "https://facebook.com/thejettdurham"
 
 [[menu.main]]
     name = "Blog"
