@@ -1,6 +1,6 @@
 baseurl = "http://jettdurham.com/"
 languageCode = "en-us"
-title = "Jett's Awesome Blog"
+title = "Jett's DevBlog"
 theme = "ghostwriter"
 
 # Pagination
