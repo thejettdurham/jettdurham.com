@@ -248,3 +248,27 @@ a.sidebar-nav-item:focus {
 .theme-base-0f .related-posts li a:hover {
   color: #8f5536;
 }
+
+.sidebar-footer-text {
+  text-align: center;
+}
+
+.social a {
+  padding: 0 4px;
+}
+
+.rounded-logo {
+  box-shadow: 0 0 5px #aaa;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  @media screen {
+    
+  }
+}
+
+@media (max-width: 48em) {
+  .logo-container {
+    display: none;
+  }
+}

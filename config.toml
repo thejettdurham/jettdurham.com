@@ -20,14 +20,19 @@ paginatePath = "page"
     email = "jett@jettdurham.com"
 
 [params]
-themeColor = "theme-base-0d"
+  themeColor = "theme-base-0d"
   intro = true
   headline = "Jett's DevBlog"
   description = "Musings on Software Development"
-  github = "https://github.com/thejettdurham"
-  linkedin = "https://linkedin.com/in/thejettdurham/"
-  twitter = "https://twitter.com/thejettdurham"
-  facebook = "https://facebook.com/thejettdurham"
+  github = "thejettdurham"
+  linkedin = "thejettdurham"
+  twitter = "thejettdurham"
+  instagram = "thejettdurham"
+  youtube = "UC1PJB2gUdwtQUMMsLxDPAgw"
+  twitch = "thejettdurham"
+
+[params.sidebar]
+  logo = "images/shot-cropped-web.jpg"
 
 [[menu.main]]
     name = "Blog"

@@ -1,5 +1,11 @@
 <aside class="sidebar">
   <div class="container sidebar-sticky">
+    <div class="logo-container">
+        <a href="/">
+          <img src='{{ .Site.Params.sidebar.logo | default "images/screenshot.png" | absURL }}' alt="Profile {{ .Title }}" class="rounded-logo">
+        </a>
+      </div>
+
     <div class="sidebar-about">
       <a href="{{ .Site.BaseURL }}"><h1>{{ .Site.Title }}</h1></a>
       <p class="lead">
@@ -15,6 +21,27 @@
       </ul>
     </nav>
 
-    <p>{{ with .Site.Params.copyright }}{{.}}{{ else }}&copy; {{ now.Format "2006"}} All Rights Reserved {{end}}</p>
+    <section class="social sidebar-footer-text">
+      {{ with .Site.Params.twitter }}
+      <a href="https://twitter.com/{{.}}" rel="me" target="_blank"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a>
+      {{ end }}
+      {{ with .Site.Params.github }}
+      <a href="https://github.com/{{.}}" rel="me" target="_blank"><i class="fab fa-github fa-lg" aria-hidden="true"></i></a>
+      {{ end }}
+      {{ with .Site.Params.instagram }}
+      <a href="https://instagram.com/{{.}}" rel="me" target="_blank"><i class="fab fa-instagram fa-lg" aria-hidden="true"></i></a>
+      {{ end }}
+      {{ with .Site.Params.linkedin }}
+      <a href="https://linkedin.com/in/{{.}}" rel="me" target="_blank"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a>
+      {{ end }}
+      {{ with .Site.Params.youtube }}
+      <a href="https://www.youtube.com/channel/{{.}}" rel="me" target="_blank"><i class="fab fa-youtube fa-lg" aria-hidden="true"></i></a>
+      {{ end }}
+      {{ with .Site.Params.twitch }}
+      <a href="https://twitch.com/{{.}}" rel="me" target="_blank"><i class="fab fa-twitch fa-lg" aria-hidden="true"></i></a>
+      {{ end }}
+    </section>
+
+    <p class="sidebar-footer-text">{{ with .Site.Params.copyright }}{{.}}{{ else }}&copy; {{ now.Format "2006"}} All Rights Reserved {{end}}</p>
   </div>
 </aside>
