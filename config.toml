@@ -1,7 +1,7 @@
-baseurl = "http://jettdurham.com/"
+baseurl = "/"
 languageCode = "en-us"
 title = "Jett's DevBlog"
-theme = "ghostwriter"
+theme = "hyde"
 
 # Pagination
 paginate = 5
@@ -20,6 +20,7 @@ paginatePath = "page"
     email = "jett@jettdurham.com"
 
 [params]
+themeColor = "theme-base-0d"
   intro = true
   headline = "Jett's DevBlog"
   description = "Musings on Software Development"
