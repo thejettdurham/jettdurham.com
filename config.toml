@@ -23,13 +23,11 @@ paginatePath = "page"
   themeColor = "theme-base-0d"
   intro = true
   headline = "Jett's DevBlog"
-  description = "Musings on Software Development"
+  description = "How I Build Things"
   github = "thejettdurham"
   linkedin = "thejettdurham"
   twitter = "thejettdurham"
-  instagram = "thejettdurham"
   youtube = "UC1PJB2gUdwtQUMMsLxDPAgw"
-  twitch = "thejettdurham"
 
 [params.sidebar]
   logo = "images/shot-cropped-web.jpg"
