@@ -1,6 +1,6 @@
 {{ define "main" -}}
 <div class="posts">
-{{ $pag := .Paginate (where .Data.Pages "Type" "post") }}
+{{ $pag := .Paginate (where .Site.RegularPages "Type" "posts") }}
 {{ range $pag.Pages }}
 <article class="post">
   <h1 class="post-title">
