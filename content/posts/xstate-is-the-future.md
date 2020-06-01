@@ -1,6 +1,6 @@
 ---
 title: "Xstate is the future"
-date: 2020-05-27T21:47:20-05:00
+date: 2020-06-08T12:00:00-05:00
 draft: true
 ---
 
