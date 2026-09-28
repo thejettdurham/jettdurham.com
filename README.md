@@ -27,6 +27,8 @@ Run `pnpm format` to format the source. `pnpm install` installs the Husky precom
 
 The site lives in `src/pages/`, its shared layout and CSS in `src/layouts/` and `src/styles/`, and posts in `src/content/blog/`. Edit `src/content/about.md` for the About page's heading, prose, title, and description; `src/pages/about/index.astro` supplies the portrait and layout. `public/` contains files served without processing. The canonical site is `https://www.jettdurham.com`.
 
+To change the site's colors, edit the light and dark palettes together in `src/styles/theme.css`. The desktop frame and navigation are in `src/layouts/Base.astro`; `src/styles/global.css` applies the color tokens and article typography. The navigation font is self-hosted in the static build.
+
 ## Publishing from Obsidian
 
 The site consumes the natural output of [Publish to Git Repo](https://community.obsidian.md/plugins/publish-to-git-repo). The plugin works on desktop and mobile. Configure it once in each vault installation where you plan to publish:

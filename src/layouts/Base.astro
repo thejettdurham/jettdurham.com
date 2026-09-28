@@ -1,4 +1,6 @@
 ---
+import '@fontsource/silkscreen/latin-700.css';
+import '../styles/theme.css';
 import '../styles/global.css';
 const baseTitle = "Jett's Space";
 const {
@@ -14,6 +16,15 @@ const fullTitle = title === baseTitle ? title : `${title} · ${baseTitle}`;
 const socialImage = image
   ? new URL(image, Astro.site).href
   : new URL('/images/jett.jpg', Astro.site).href;
+const path = Astro.url.pathname;
+const navigation = [
+  { label: 'Home', href: '/' },
+  { label: 'Writing', href: '/blog/' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Music', href: '/music/' },
+  { label: 'About', href: '/about/' },
+];
+const isCurrent = (href: string) => (href === '/' ? path === href : path.startsWith(href));
 ---
 
 <!doctype html>
@@ -22,8 +33,6 @@ const socialImage = image
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f5f3ed" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#171b1c" media="(prefers-color-scheme: dark)" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -48,50 +57,61 @@ const socialImage = image
     <a class="skip-link" href="#main">
       Skip to content
     </a>
-    <div class="site-shell">
-      <header class="site-header">
-        <a class="wordmark" href="/" aria-label="Jett Durham home">
-          Jett's Space
-        </a>
-        <nav aria-label="Main navigation">
-          <a
-            href="/blog/"
-            aria-current={Astro.url.pathname.startsWith('/blog/') ? 'page' : undefined}
-          >
-            Writing
-          </a>
-          <a
-            href="/projects/"
-            aria-current={Astro.url.pathname.startsWith('/projects/') ? 'page' : undefined}
-          >
-            Projects
-          </a>
-          <a
-            href="/music/"
-            aria-current={Astro.url.pathname.startsWith('/music/') ? 'page' : undefined}
-          >
-            Music
-          </a>
-          <a
-            href="/about/"
-            aria-current={Astro.url.pathname.startsWith('/about/') ? 'page' : undefined}
-          >
-            About
-          </a>
-        </nav>
-      </header>
-      <main id="main">
-        <slot />
-      </main>
-      <footer class="site-footer">
-        <span>© {new Date().getFullYear()} Jett Durham</span>
-        <div>
-          <a href="/rss.xml">RSS</a>
-          <a href="https://github.com/thejettdurham" rel="me">
-            GitHub
-          </a>
+    <div class="desktop-shell">
+      <div class="desktop-label" aria-hidden="true">
+        <span>◆ Jett's Space</span>
+        <span>Personal desktop · {new Date().getFullYear()}</span>
+      </div>
+      <div class="app-window">
+        <header class="window-header">
+          <div class="title-bar">
+            <span class="window-control" aria-hidden="true">
+              ▰
+            </span>
+            <span class="window-name">{fullTitle}</span>
+            <span class="window-actions" aria-hidden="true">
+              <span class="window-control">↓</span>
+              <span class="window-control">↑</span>
+            </span>
+          </div>
+          <nav class="top-nav" aria-label="Main navigation">
+            {navigation.map(({ label, href }) => (
+              <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
+                {label}
+              </a>
+            ))}
+          </nav>
+        </header>
+        <div class="window-workspace">
+          <aside class="sidebar">
+            <nav aria-label="Site directory">
+              <span class="directory-label">Directory / 01</span>
+              <div class="directory-primary">
+                {navigation.map(({ label, href }) => (
+                  <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+              <div class="directory-divider" aria-hidden="true"></div>
+              <span class="directory-label">Elsewhere</span>
+              <div class="directory-extra">
+                <a href="/rss.xml">RSS feed</a>
+                <a href="https://github.com/thejettdurham" rel="me">
+                  GitHub
+                </a>
+              </div>
+            </nav>
+          </aside>
+          <main id="main" class="page-content">
+            <slot />
+          </main>
         </div>
-      </footer>
+        <footer class="status-bar">
+          <span>Ready · {title}</span>
+          <span>© {new Date().getFullYear()} Jett Durham</span>
+        </footer>
+      </div>
     </div>
   </body>
 </html>
