@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import { Content, frontmatter } from '../../content/about.md';
+---
+
+<Base title={frontmatter.title} description={frontmatter.description}>
+  <div class="about-layout">
+    <div>
+      <p class="eyebrow">About</p>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+    <img
+      class="portrait"
+      src="/images/jett.jpg"
+      alt="Portrait of Jett Durham"
+      width="1037"
+      height="1037"
+      loading="eager"
+    />
+  </div>
+</Base>
