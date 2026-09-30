@@ -25,7 +25,7 @@ pnpm verify
 
 Run `pnpm format` to format the source. `pnpm install` installs the Husky precommit hook, which formats staged files with Prettier before a commit. Published Markdown in `src/content/blog/` is excluded because Obsidian owns those files.
 
-The site lives in `src/pages/`, its shared layout and CSS in `src/layouts/` and `src/styles/`, and posts in `src/content/blog/`. Edit `src/content/about.md` for the About page's heading, prose, title, and description; `src/pages/about/index.astro` supplies the portrait and layout. `public/` contains files served without processing. The canonical site is `https://www.jettdurham.com`.
+The site lives in `src/pages/`, its shared layout and CSS in `src/layouts/` and `src/styles/`, and posts in `src/content/blog/`. Edit `src/content/about.md` and `src/content/ai-use.md` for those pages' text and metadata; their Astro pages supply the layout. `public/` contains files served without processing. The canonical site is `https://www.jettdurham.com`.
 
 To change the site's colors, edit the light and dark palettes together in `src/styles/theme.css`. The desktop frame and navigation are in `src/layouts/Base.astro`; `src/styles/global.css` applies the color tokens and article typography. The navigation font is self-hosted in the static build.
 
@@ -74,12 +74,26 @@ The publishing contract and its limitations are documented in the [plugin's READ
 
 ## AWS setup and deployment
 
-`infra/` contains a single CDK stack in `us-east-1`. It defines a private, versioned S3 bucket, CloudFront with Origin Access Control and clean URL rewrites, ACM certificate, Route 53 records for the apex and `www`, and a GitHub Actions deploy role restricted to `main`. The apex redirects to canonical `www`. The stack retains the bucket if the stack is removed.
+`infra/` contains two small CDK stacks in `us-east-1`. `JettDurhamSite` defines a private, versioned S3 bucket, CloudFront with Origin Access Control and clean URL rewrites, an ACM certificate, and a GitHub Actions deploy role restricted to `main`. `JettDurhamDns` defines the Route 53 aliases for the apex and `www`. The apex redirects to canonical `www`. The site stack retains the bucket if the stack is removed.
 
-1. Ensure the `jettdurham.com` Route 53 hosted zone exists and note its zone ID. Review the current DNS and CloudFront resources before deploying this new stack; CDK will create or change apex and `www` DNS records when explicitly deployed.
+1. Ensure the `jettdurham.com` Route 53 hosted zone exists and note its zone ID. Keep the existing site records in place while preparing the new site.
 2. Ensure the GitHub OIDC provider `token.actions.githubusercontent.com` exists in the AWS account. Its audience is `sts.amazonaws.com`. The stack references this account level provider; it does not create a duplicate.
-3. After the root `pnpm install --frozen-lockfile`, run `pnpm --dir infra cdk diff -c account=ACCOUNT_ID -c hostedZoneId=ZONE_ID`. When the diff is correct, run the same command with `deploy`.
+3. After the root `pnpm install --frozen-lockfile`, review and deploy only the site stack. Replace `PROFILE` with your local AWS CLI profile. The DNS stack remains undeployed, so the old site stays live.
+
+   ```sh
+   pnpm --dir infra cdk diff JettDurhamSite -c account=ACCOUNT_ID -c hostedZoneId=ZONE_ID --profile PROFILE
+   pnpm --dir infra cdk deploy JettDurhamSite -c account=ACCOUNT_ID -c hostedZoneId=ZONE_ID --profile PROFILE
+   ```
+
 4. Copy stack outputs `BucketName`, `DistributionId`, and `DeployRoleArn` to GitHub repository **Actions variables** named `AWS_SITE_BUCKET`, `AWS_CLOUDFRONT_DISTRIBUTION_ID`, and `AWS_DEPLOY_ROLE_ARN`.
-5. Once ready, merge or push the Astro branch to `main`. `.github/workflows/deploy.yml` builds and checks on each push to `main`, syncs `dist/` to S3, assigns a short cache lifetime to HTML and immutable caching to Astro's fingerprinted `_astro/` assets, then invalidates CloudFront.
+5. Once ready, merge or push the Astro branch to `main`. `.github/workflows/deploy.yml` builds and checks on each push to `main`, syncs `dist/` to S3, assigns a short cache lifetime to HTML and immutable caching to Astro's fingerprinted `_astro/` assets, then invalidates CloudFront. Verify the new site at the `DistributionDomainName` stack output before changing DNS.
+6. At cutover, remove the existing apex A record (`104.198.14.52`) and `www` CNAME (`jettdurham-com.netlify.com`) from the hosted zone. Leave the NS, SOA, MX, TXT, and underscore-prefixed validation CNAME records alone. Then review and deploy the DNS stack, which creates A and AAAA aliases for both names:
+
+   ```sh
+   pnpm --dir infra cdk diff JettDurhamDns -c account=ACCOUNT_ID -c hostedZoneId=ZONE_ID --profile PROFILE
+   pnpm --dir infra cdk deploy JettDurhamDns -c account=ACCOUNT_ID -c hostedZoneId=ZONE_ID --profile PROFILE
+   ```
+
+   Keep the old record values handy until the new records and site are verified. After cutover, DNS stays managed by `JettDurhamDns`.
 
 The deployment workflow never runs CDK. Infrastructure changes require an explicit reviewed CDK deployment. CloudFront rewrites clean paths such as `/blog/` to `/blog/index.html` before requesting from the private bucket.

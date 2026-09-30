@@ -1,0 +1,10 @@
+---
+import Base from '../../layouts/Base.astro';
+import { Content, frontmatter } from '../../content/ai-use.md';
+---
+
+<Base title={frontmatter.title} description={frontmatter.description}>
+  <article class="article prose">
+    <Content />
+  </article>
+</Base>
