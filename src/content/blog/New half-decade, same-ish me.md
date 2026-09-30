@@ -5,6 +5,6 @@ date: 2026-09-29
 updated: 2026-09-29
 tags:
   - life-update
-draft: "false"
+draft: false
 ---
-If you're reading this, then my workflow for writing and publishing blog posts from Obsidian is working like a charm!
+> If you're reading this, then my workflow for writing and publishing blog posts from Obsidian is working like a charm! And it even works from my phone! 
