@@ -62,12 +62,12 @@ gh-publish: true
 
 Run **Publish to Git Repo** in Obsidian and confirm its preview. It pushes published Markdown and attachments directly to GitHub; GitHub Actions then builds and deploys the site. No Astro, Git, CLI, or script is needed on the writing device. If Obsidian Sync carries your vault to another device, install and configure the plugin there as well.
 
-The plugin writes text only notes as `src/content/blog/name.md`. A note with an embedded image becomes `src/content/blog/name/index.md` plus `images/`. Astro accepts both layouts under the same `/blog/name/` URL. Relative image embeds are fingerprinted by Astro. Other colocated attachments are copied to matching output paths so normal Markdown links to PDFs and similar files work.
+The plugin writes text only notes as `src/content/blog/name.md`. A note with an embedded image becomes `src/content/blog/name/index.md` plus `images/`. Astro accepts both layouts under the same `/blog/name/` URL. If the plugin leaves both forms behind when an image is added, the folder version takes precedence. Relative image embeds are fingerprinted by Astro. Other colocated attachments are copied to matching output paths so normal Markdown links to PDFs and similar files work.
 
 - `![[photo.png]]` is rewritten by the plugin to `![](images/photo.png)`.
 - `[[another-post]]` and `[[another-post|a label]]` become links to `/blog/another-post/` during the build. Standard Markdown links to another `.md` post work too. Link to published notes only; `pnpm verify` catches broken links after build.
 - Put an ordinary YouTube URL on its own Markdown line to render a responsive, privacy enhanced embed. A normal inline YouTube link remains a link.
-- The plugin does not expand note transclusions (`![[another-note]]`). It also does not delete posts from GitHub when you unmark or delete them in Obsidian. Remove obsolete files in GitHub when necessary. If removing the last image changes a post from `name/index.md` to `name.md`, delete the old folder in GitHub to avoid duplicate content IDs.
+- The plugin does not expand note transclusions (`![[another-note]]`). It also does not delete posts from GitHub when you unmark or delete them in Obsidian. Remove obsolete files in GitHub when necessary. If removing the last image changes a post from `name/index.md` back to `name.md`, delete the old folder in GitHub so the flat version becomes active.
 - Avoid changing a published note's filename unless you also arrange a redirect from its previous URL. The filename determines the public slug.
 
 The publishing contract and its limitations are documented in the [plugin's README](https://community.obsidian.md/plugins/publish-to-git-repo). The build adapter is deliberately small and lives in `src/lib/obsidian-markdown.ts`.
