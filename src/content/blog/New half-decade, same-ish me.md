@@ -7,4 +7,4 @@ tags:
   - life-update
 draft: false
 ---
-> If you're reading this, then my workflow for writing and publishing blog posts from Obsidian is working like a charm! And it even works from my phone! 
+> If you're reading this, then my workflow for writing and publishing blog posts from Obsidian is working like a charm! And it even works from my phone, my iPad, and… 
