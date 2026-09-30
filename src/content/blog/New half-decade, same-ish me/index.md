@@ -10,6 +10,10 @@ draft: false
 > If you're reading this, then my workflow for writing and publishing blog posts from Obsidian is working like a charm! And it even works from my phone, my iPad, and my Vision Pro!
 
 ![](images/IMG_0286.jpeg)
+```site
+alt=Jett's visionOS persona smiling and giving thumbs-up
+caption=Personas are known to exaggerate wrinkles...right? 😅 
+```
 
 If you're particularly observant, you might have noticed that there's a 6+ year gap between this post and the previous one. There are many reasons for this. Mostly excuses. But such excuses and justifications are of little interest in the grand scheme. The important thing is that I'm here now and I am to take this whole blogging thing a little more seriously this time around.
 
@@ -23,10 +27,16 @@ So I guess I'm taking this whole endeavor both more *and less* seriously. It's a
 This shift should be evident in the refreshed style of this blog. Here's how it looked before
 
 ![](images/Pasted%20image%2020260929224306.png)
+```site
+alt=Screenshot of Jett's old site
+```
 
 And here's how it looks now (redundant now, but this will capture it for posterity when I decide I'm tired of this theme)
 
 ![](images/Pasted%20image%2020260929225422.png)
+```site
+alt=Screenshot of Jett's current site
+```
 
 The old format was presenting the typical "I'm a very experienced software engineer who writes thought-provoking pieces that go viral on Hacker News and I'm way too cool to be bothered with building a unique theme." The new theme[^1] better represents my interests and my background, but the content is the more important shift. 
 
