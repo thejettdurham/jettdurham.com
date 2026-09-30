@@ -58,7 +58,7 @@ gh-publish: true
 ---
 ```
 
-`title` and `date` are required for the site; `description`, `updated`, `tags`, and `draft` are optional. `gh-publish: true` is required by the Obsidian plugin but is stripped from the published file. A `draft: true` note is excluded from the site, RSS, and sitemap, but its Markdown remains visible in this public GitHub repository. Keep private drafts in your Obsidian vault; do not publish them to this repo. To publish a repo draft on the site, change `draft` to `false` and publish again.
+`title` and `date` are required for the site; `description`, `updated`, `tags`, and `draft` are optional. Use a checkbox Property for `draft` in Obsidian when possible; the site also accepts quoted `"true"` and `"false"` values from text Properties. `gh-publish: true` is required by the Obsidian plugin but is stripped from the published file. A `draft: true` note is excluded from the site, RSS, and sitemap, but its Markdown remains visible in this public GitHub repository. Keep private drafts in your Obsidian vault; do not publish them to this repo. To publish a repo draft on the site, change `draft` to `false` and publish again.
 
 Run **Publish to Git Repo** in Obsidian and confirm its preview. It pushes published Markdown and attachments directly to GitHub; GitHub Actions then builds and deploys the site. No Astro, Git, CLI, or script is needed on the writing device. If Obsidian Sync carries your vault to another device, install and configure the plugin there as well.
 

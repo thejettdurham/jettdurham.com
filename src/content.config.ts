@@ -21,7 +21,10 @@ const blog = defineCollection({
     summary: z.string().optional(), // Historical Hugo frontmatter.
     updated: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
-    draft: z.boolean().default(false),
+    draft: z.preprocess(
+      (value) => (value === 'true' ? true : value === 'false' ? false : value),
+      z.boolean().default(false),
+    ),
     image: z.string().optional(),
   }),
 });
