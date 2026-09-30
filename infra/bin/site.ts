@@ -15,6 +15,8 @@ if (!account || !hostedZoneId)
   throw new Error('Pass -c account=... -c hostedZoneId=... (see README).');
 
 class SiteStack extends cdk.Stack {
+  readonly distribution: cloudfront.Distribution;
+
   constructor(scope: Construct, id: string) {
     super(scope, id, {
       env: { account, region: 'us-east-1' },
@@ -48,7 +50,7 @@ class SiteStack extends cdk.Stack {
   return request;
 }`),
     });
-    const distribution = new cloudfront.Distribution(this, 'Distribution', {
+    this.distribution = new cloudfront.Distribution(this, 'Distribution', {
       defaultRootObject: 'index.html',
       domainNames: ['www.jettdurham.com', 'jettdurham.com'],
       certificate,
@@ -72,19 +74,6 @@ class SiteStack extends cdk.Stack {
         },
       ],
     });
-    for (const name of ['www', '']) {
-      const suffix = name || 'Apex';
-      new route53.ARecord(this, `AliasA${suffix}`, {
-        zone,
-        recordName: name || undefined,
-        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
-      });
-      new route53.AaaaRecord(this, `AliasAAAA${suffix}`, {
-        zone,
-        recordName: name || undefined,
-        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
-      });
-    }
     const providerArn = `arn:aws:iam::${account}:oidc-provider/token.actions.githubusercontent.com`;
     const role = new iam.Role(this, 'GitHubDeployRole', {
       assumedBy: new iam.WebIdentityPrincipal(providerArn, {
@@ -107,12 +96,43 @@ class SiteStack extends cdk.Stack {
     role.addToPolicy(
       new iam.PolicyStatement({
         actions: ['cloudfront:CreateInvalidation'],
-        resources: [distribution.distributionArn],
+        resources: [this.distribution.distributionArn],
       }),
     );
     new cdk.CfnOutput(this, 'BucketName', { value: bucket.bucketName });
-    new cdk.CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
+    new cdk.CfnOutput(this, 'DistributionId', { value: this.distribution.distributionId });
+    new cdk.CfnOutput(this, 'DistributionDomainName', {
+      value: this.distribution.distributionDomainName,
+    });
     new cdk.CfnOutput(this, 'DeployRoleArn', { value: role.roleArn });
   }
 }
-new SiteStack(app, 'JettDurhamSite');
+
+class DnsStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, distribution: cloudfront.IDistribution) {
+    super(scope, id, {
+      env: { account, region: 'us-east-1' },
+      description: 'Route 53 aliases for the static site',
+    });
+    const zone = route53.HostedZone.fromHostedZoneAttributes(this, 'Zone', {
+      hostedZoneId,
+      zoneName: 'jettdurham.com',
+    });
+    for (const name of ['www', '']) {
+      const suffix = name || 'Apex';
+      new route53.ARecord(this, `AliasA${suffix}`, {
+        zone,
+        recordName: name || undefined,
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      });
+      new route53.AaaaRecord(this, `AliasAAAA${suffix}`, {
+        zone,
+        recordName: name || undefined,
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      });
+    }
+  }
+}
+
+const site = new SiteStack(app, 'JettDurhamSite');
+new DnsStack(app, 'JettDurhamDns', site.distribution);
