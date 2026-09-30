@@ -1,4 +1,13 @@
-/public
-/resources/_gen
-
+node_modules/
+dist/
+.astro/
+.cdk.out/
+infra/cdk.out/
 .DS_Store
+.env
+.env.*
+!.env.example
+.obsidian/
+*.pem
+*.key
+.husky/_/

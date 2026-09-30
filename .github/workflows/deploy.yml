@@ -1,0 +1,38 @@
+name: Build and deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: production
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm check
+      - run: pnpm build
+      - run: pnpm verify
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+      - name: Upload static site
+        env:
+          BUCKET: ${{ vars.AWS_SITE_BUCKET }}
+          DISTRIBUTION: ${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+        run: |
+          aws s3 sync dist/ "s3://$BUCKET/" --delete --cache-control 'public,max-age=3600'
+          aws s3 cp dist/ "s3://$BUCKET/" --recursive --exclude '*' --include '*.html' --cache-control 'public,max-age=60,must-revalidate'
+          aws s3 cp dist/_astro/ "s3://$BUCKET/_astro/" --recursive --cache-control 'public,max-age=31536000,immutable'
+          aws cloudfront create-invalidation --distribution-id "$DISTRIBUTION" --paths '/*'

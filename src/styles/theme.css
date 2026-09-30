@@ -1,0 +1,53 @@
+/*
+ * The site palette lives here. Each token describes a part of the desktop
+ * rather than a specific element, so the light and dark themes can be tuned
+ * without changing component styles.
+ */
+:root {
+  color-scheme: light;
+
+  --color-desktop: #a5b9b4;
+  --color-desktop-grid: #99ada9;
+  --color-frame: #263c43;
+  --color-chrome: #d5dfd8;
+  --color-chrome-highlight: #edf0e7;
+  --color-sidebar: #e1e7dc;
+  --color-paper: #f8f6ec;
+  --color-text: #23373c;
+  --color-muted: #5c7374;
+  --color-rule: #a0b2aa;
+  --color-accent: #426a76;
+  --color-selection: #335b65;
+  --color-selection-text: #f4f1e4;
+  --color-shadow: #526e6f;
+  --color-code: #24383e;
+  --color-code-text: #f6f2e7;
+
+  --font-ui: 'Silkscreen', 'Courier New', monospace;
+  --font-mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  --font-body: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-reading: Georgia, 'Iowan Old Style', Baskerville, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+
+    --color-desktop: #26363e;
+    --color-desktop-grid: #2a3c44;
+    --color-frame: #a9c1bd;
+    --color-chrome: #43545c;
+    --color-chrome-highlight: #596b70;
+    --color-sidebar: #34444d;
+    --color-paper: #1d2a34;
+    --color-text: #e8ebe3;
+    --color-muted: #bac9c5;
+    --color-rule: #60757b;
+    --color-accent: #a4cad0;
+    --color-selection: #b1d2d2;
+    --color-selection-text: #1d3039;
+    --color-shadow: #101e25;
+    --color-code: #111e25;
+    --color-code-text: #e8ebe3;
+  }
+}

@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostList from '../../components/PostList.astro';
+import { publishedPosts } from '../../lib/posts';
+const posts = await publishedPosts();
+---
+
+<Base
+  title="Writing"
+  description="Essays and notes by Jett Durham on software, creativity, and life beyond code."
+>
+  <div class="page-intro">
+    <p class="eyebrow">Writing</p>
+    <h1>Ideas, in progress.</h1>
+    <p class="lead">Occasional essays and notes on the things I’m building and thinking about.</p>
+  </div>
+  {posts.length ? <PostList posts={posts} /> : <p>Writing will appear here soon.</p>}
+</Base>

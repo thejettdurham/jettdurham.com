@@ -1,0 +1,7 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "strict": true
+  },
+  "exclude": ["infra", "node_modules", "dist"]
+}

@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from '../components/PostList.astro';
+import { publishedPosts } from '../lib/posts';
+const posts = (await publishedPosts()).slice(0, 3);
+---
+
+<Base>
+  <section class="home-intro">
+    <p class="eyebrow">A personal website</p>
+    <h1>Heya, I’m Jett.</h1>
+    <p class="lead">
+      I make stuff: mostly software, sometimes music, and a lot of ideas. This site is a spot where
+      I share the things I'm working on, thinking about, or generally interested in.
+    </p>
+  </section>
+  <section class="home-grid" aria-label="Explore the site">
+    <a href="/blog/">
+      <span class="section-number">01 / Writing</span>
+      <h2>Field Notes</h2>
+      <p>Longer thoughts on software, creative work, and whatever I’m trying to understand.</p>
+      <span class="text-arrow">Read the blog →</span>
+    </a>
+    <a href="/projects/">
+      <span class="section-number">02 / Projects</span>
+      <h2>What I'm Building</h2>
+      <p>Software, XR experiments, and small ideas that grew into something worth sharing.</p>
+      <span class="text-arrow">Explore projects →</span>
+    </a>
+    <a href="/music/">
+      <span class="section-number">03 / Music</span>
+      <h2>What I’m playing</h2>
+      <p>Music has been part of my life for as long as I can remember.</p>
+      <span class="text-arrow">Visit music →</span>
+    </a>
+  </section>
+  {posts.length > 0 && (
+    <section class="recent-writing">
+      <div class="section-heading">
+        <h2>Recent writing</h2>
+        <a href="/blog/">All writing →</a>
+      </div>
+      <PostList posts={posts} />
+    </section>
+  )}
+</Base>

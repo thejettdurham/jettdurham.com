@@ -1,0 +1,118 @@
+---
+import '@fontsource/silkscreen/latin-700.css';
+import '../styles/theme.css';
+import '../styles/global.css';
+const baseTitle = "Jett's Space";
+const {
+  title = baseTitle,
+  description = 'Writing, software, music, and more by Jett Durham.',
+  type = 'website',
+  image,
+  published,
+  updated,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const fullTitle = title === baseTitle ? title : `${title} · ${baseTitle}`;
+const socialImage = image
+  ? new URL(image, Astro.site).href
+  : new URL('/images/jett.jpg', Astro.site).href;
+const path = Astro.url.pathname;
+const navigation = [
+  { label: 'Home', href: '/' },
+  { label: 'Writing', href: '/blog/' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Music', href: '/music/' },
+  { label: 'About', href: '/about/' },
+  { label: 'AI use', href: '/ai-use/' },
+];
+const isCurrent = (href: string) => (href === '/' ? path === href : path.startsWith(href));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Jett Durham's writing"
+      href="/rss.xml"
+    />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Jett Durham" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
+    {updated && <meta property="article:modified_time" content={updated.toISOString()} />}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <div class="desktop-shell">
+      <div class="desktop-label" aria-hidden="true">
+        <span>◆ Jett's Space</span>
+        <span>Personal desktop · {new Date().getFullYear()}</span>
+      </div>
+      <div class="app-window">
+        <header class="window-header">
+          <div class="title-bar">
+            <span class="window-control" aria-hidden="true">
+              ▰
+            </span>
+            <span class="window-name">{fullTitle}</span>
+            <span class="window-actions" aria-hidden="true">
+              <span class="window-control">↓</span>
+              <span class="window-control">↑</span>
+            </span>
+          </div>
+          <nav class="top-nav" aria-label="Main navigation">
+            {navigation.map(({ label, href }) => (
+              <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
+                {label}
+              </a>
+            ))}
+          </nav>
+        </header>
+        <div class="window-workspace">
+          <aside class="sidebar">
+            <nav aria-label="Site directory">
+              <span class="directory-label">Directory / 01</span>
+              <div class="directory-primary">
+                {navigation.map(({ label, href }) => (
+                  <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+              <div class="directory-divider" aria-hidden="true"></div>
+              <span class="directory-label">Elsewhere</span>
+              <div class="directory-extra">
+                <a href="/rss.xml">RSS feed</a>
+                <a href="https://github.com/thejettdurham" rel="me">
+                  GitHub
+                </a>
+              </div>
+            </nav>
+          </aside>
+          <main id="main" class="page-content">
+            <slot />
+          </main>
+        </div>
+        <footer class="status-bar">
+          <span>Ready · {title}</span>
+          <span>© {new Date().getFullYear()} Jett Durham</span>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
