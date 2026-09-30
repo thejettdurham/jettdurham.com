@@ -2,6 +2,33 @@ import type { Link, PhrasingContent, Root, RootContent } from 'mdast';
 import { visit } from 'unist-util-visit';
 import { slugify } from './slugify.ts';
 
+function siteFields(value: string, allowed: string[], line?: number): Record<string, string> {
+  const fields: Record<string, string> = {};
+  for (const rawLine of value.split(/\r?\n/)) {
+    if (!rawLine.trim()) continue;
+    const separator = rawLine.indexOf('=');
+    const key = rawLine.slice(0, separator).trim();
+    if (separator < 1 || !allowed.includes(key) || Object.hasOwn(fields, key)) {
+      throw new Error(`Invalid site directive field at line ${line ?? '?'}: ${rawLine}`);
+    }
+    fields[key] = rawLine.slice(separator + 1).trim();
+  }
+  return fields;
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => {
+    const entities: Record<string, string> = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;',
+    };
+    return entities[character];
+  });
+}
+
 function youtubeId(value: string): string | null {
   try {
     const url = new URL(value);
@@ -63,13 +90,63 @@ export function obsidianMarkdown() {
     visit(tree, 'paragraph', (node, index, parent) => {
       if (index === undefined || !parent || node.children.length !== 1) return;
       const child = node.children[0];
+      const next = parent.children[index + 1];
+      const directive = next?.type === 'code' && next.lang === 'site' ? next : undefined;
+
+      if (child.type === 'image' && directive) {
+        const fields = siteFields(
+          directive.value,
+          ['alt', 'caption'],
+          directive.position?.start.line,
+        );
+        if (!Object.hasOwn(fields, 'alt')) {
+          throw new Error(
+            `Image site directive at line ${directive.position?.start.line ?? '?'} needs alt`,
+          );
+        }
+        child.alt = fields.alt;
+        if (fields.caption) {
+          (parent.children as RootContent[])[index] = {
+            type: 'paragraph',
+            data: { hName: 'figure' },
+            children: [
+              child,
+              {
+                type: 'text',
+                data: { hName: 'figcaption' },
+                value: fields.caption,
+              },
+            ],
+          };
+        }
+        parent.children.splice(index + 1, 1);
+        return index + 1;
+      }
+
       if (child.type !== 'link') return;
       const id = youtubeId(child.url);
       if (!id) return;
+      const fields = directive
+        ? siteFields(directive.value, ['title', 'caption'], directive.position?.start.line)
+        : {};
+      const title = escapeHtml(fields.title || 'YouTube video');
+      const embed = `<div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
       (parent.children as RootContent[])[index] = {
         type: 'html',
-        value: `<div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="YouTube video" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`,
+        value: fields.caption
+          ? `<figure>${embed}<figcaption>${escapeHtml(fields.caption)}</figcaption></figure>`
+          : embed,
       };
+      if (directive) parent.children.splice(index + 1, 1);
+      return index + 1;
+    });
+
+    visit(tree, 'code', (node) => {
+      if (node.lang === 'site') {
+        throw new Error(
+          `Site directive at line ${node.position?.start.line ?? '?'} must follow a standalone image or YouTube URL`,
+        );
+      }
     });
   };
 }

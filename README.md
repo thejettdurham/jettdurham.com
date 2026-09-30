@@ -67,10 +67,29 @@ The plugin writes text only notes as `src/content/blog/name.md`. A note with an 
 - `![[photo.png]]` is rewritten by the plugin to `![](images/photo.png)`.
 - `[[another-post]]` and `[[another-post|a label]]` become links to `/blog/another-post/` during the build. Standard Markdown links to another `.md` post work too. Link to published notes only; `pnpm verify` catches broken links after build.
 - Put an ordinary YouTube URL on its own Markdown line to render a responsive, privacy enhanced embed. A normal inline YouTube link remains a link.
+- Optionally put a fenced `site` block immediately after a standalone image or YouTube URL. For an image, `alt` is required when using the block and `caption` is optional. For a video, `title` and `caption` are optional. Each field is one `key=value` line; values can contain `=`. The block remains visible as code in Obsidian but becomes image or video metadata on the site. Other fenced code blocks render normally. A misplaced block or unknown field fails the build with a line number.
 - The plugin does not expand note transclusions (`![[another-note]]`). It also does not delete posts from GitHub when you unmark or delete them in Obsidian. Remove obsolete files in GitHub when necessary. If removing the last image changes a post from `name/index.md` back to `name.md`, delete the old folder in GitHub so the flat version becomes active.
 - Avoid changing a published note's filename unless you also arrange a redirect from its previous URL. The filename determines the public slug.
 
 The publishing contract and its limitations are documented in the [plugin's README](https://community.obsidian.md/plugins/publish-to-git-repo). The build adapter is deliberately small and lives in `src/lib/obsidian-markdown.ts`.
+
+For example, these notes produce an image with alt text and a caption, followed by a video with an accessible title and caption:
+
+````md
+![[photo.png]]
+
+```site
+alt=A portrait of Jett smiling and giving a thumbs-up
+caption=Writing from visionOS.
+```
+
+https://www.youtube.com/watch?v=YOURVIDEOID
+
+```site
+title=Project demo
+caption=A short look at the prototype.
+```
+````
 
 ## AWS setup and deployment
 

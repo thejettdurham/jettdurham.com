@@ -553,10 +553,16 @@ p {
   margin: 2rem 0;
 }
 
+.prose figure img,
+.prose figure .video-embed {
+  margin: 0 auto;
+}
+
 .prose figcaption {
   color: var(--color-muted);
   font-family: var(--font-body);
   font-size: 0.8rem;
+  margin-top: 0.7rem;
   text-align: center;
 }
 
