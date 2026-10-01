@@ -130,7 +130,7 @@ export function obsidianMarkdown() {
         ? siteFields(directive.value, ['title', 'caption'], directive.position?.start.line)
         : {};
       const title = escapeHtml(fields.title || 'YouTube video');
-      const embed = `<div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/${id}" title="${title}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`;
+      const embed = `<div class="video-embed"><a class="video-embed__trigger" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener noreferrer" data-youtube-id="${id}" data-youtube-title="${title}"><span class="video-embed__play" aria-hidden="true">▶</span><span class="video-embed__title">${title}</span><span class="video-embed__notice">Play video · YouTube may receive your IP address and use cookies</span></a></div>`;
       (parent.children as RootContent[])[index] = {
         type: 'html',
         value: fields.caption
