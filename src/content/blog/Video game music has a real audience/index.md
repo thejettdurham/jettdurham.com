@@ -1,6 +1,6 @@
 ---
 title: Video game music has a real audience
-description:
+description: A love letter to classic video game music inspired by the band Bit Brigade
 date: 2026-09-30
 updated: 2026-09-30
 tags:
