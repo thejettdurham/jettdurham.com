@@ -1,9 +1,10 @@
 ---
-import { render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { formatDate, postDescription, publishedPosts, type Post } from '../../lib/posts';
 export async function getStaticPaths() {
-  return (await publishedPosts()).map((post) => ({ params: { slug: post.id }, props: { post } }));
+  const posts = import.meta.env.DEV ? await getCollection('blog') : await publishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
 }
 const { post } = Astro.props as { post: Post };
 const { Content } = await render(post);
@@ -21,6 +22,7 @@ const { Content } = await render(post);
 >
   <article class="article">
     <header class="article-header">
+      {post.data.draft && <p>Draft preview · Available only in the local dev server.</p>}
       <a class="back-link" href="/blog/">
         ← All writing
       </a>

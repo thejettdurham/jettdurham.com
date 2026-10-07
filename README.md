@@ -25,6 +25,8 @@ pnpm verify
 
 Run `pnpm format` to format the source. `pnpm install` installs the Husky precommit hook, which formats staged files with Prettier before a commit. Published Markdown in `src/content/blog/` is excluded because Obsidian owns those files.
 
+With `pnpm dev`, draft posts can be previewed directly at their `/blog/name/` URL and display a draft banner. They remain excluded from the writing index, RSS, sitemap, and production builds. Visit `/blog/site-directive-demo/` for the image and YouTube directive showcase; its source is `src/content/blog/site-directive-demo.md`.
+
 The site lives in `src/pages/`, its shared layout and CSS in `src/layouts/` and `src/styles/`, and posts in `src/content/blog/`. Edit `src/content/about.md` and `src/content/ai-use.md` for those pages' text and metadata; their Astro pages supply the layout. `public/` contains files served without processing. The canonical site is `https://www.jettdurham.com`.
 
 To change the site's colors, edit the light and dark palettes together in `src/styles/theme.css`. The desktop frame and navigation are in `src/layouts/Base.astro`; `src/styles/global.css` applies the color tokens and article typography. The navigation font is self-hosted in the static build.
