@@ -24,15 +24,15 @@ When I picked up the guitar in high school and started digging deeper into video
 Fast forward some years later and I stumble upon this video of a band called **Bit Brigade** actually playing Mega Man 2 with live guitars and drums! They also have a gamer onstage with them speed running the game projected behind them. So they aren’t just playing the music: they’re providing the soundtrack for the game in real-time!
 
 https://www.youtube.com/watch?v=MUHlVdqRlPA
-```
+```site
 title=Bit Brigade performing Mega Man 2 at MAGFest X 14 years ago
 ```
 
 I haven’t followed their career too closely, but apparently they’ve been successful enough over the last decade to tour around the country doing their thing with different games. And this last Monday saw them bring Castlevania and, of course, Mega Man 2 to my hometown.
 
 https://youtu.be/rMKPfaqQ7ZE
-```
-title=# Bit Brigade: Megaman 2 Theme (Wave, Wichita KS, Sept 28 2026)
+```site
+title=Bit Brigade: Megaman 2 Theme (Wave, Wichita KS, Sept 28 2026)
 caption=Sorry for the shit audio. I think it's because I had my camera mic default to Voice Isolation mode during video recording ☠️ 
 ```
 
