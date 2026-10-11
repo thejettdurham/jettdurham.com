@@ -4,6 +4,8 @@ description: Yes, this one is about AI
 date: 2026-10-10
 updated: 2026-10-10
 tags:
+  - music
+  - ai
 draft: false
 ---
 ![](images/IMG_6781.jpeg)
