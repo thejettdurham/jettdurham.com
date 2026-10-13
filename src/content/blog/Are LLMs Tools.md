@@ -15,7 +15,6 @@ The whole post is not that long, so I'll quote it here since LinkedIn is such a 
 
 <details>
 <summary>Read the full quote</summary>
-
 > (I keep delivering this as a quip, here's a bit more)
 > 
 > First order of business - is '**tool**' going to have an interesting, distinguishing and thus illuminative meaning or be a mere platitudinous stand-in for "anything useful"?
@@ -64,12 +63,12 @@ The whole post is not that long, so I'll quote it here since LinkedIn is such a 
 > LLMs are not tools. I know many people use the phrase "just tools" simply to indicate "they are what you make of them". **_Except that's not true_**. Automation has intrinsic properties and differences from tools that you ignore at your peril.
 > 
 > Rich
-
 </details>
+<br>
 
 I understand what this sentiment is trying to say, but I think the missing piece from the analysis is the identity of the wielder. In my view, Rich's point is better summed up like this:
 
-> If you want to call yourself a *programmer* and you generate code, then LLMs are automations; not tools
+> If you want to call yourself a *programmer*, then LLMs are an automation; not a tool
 
 This sentiment I would agree with. It has many analogs across tech and beyond.
 
