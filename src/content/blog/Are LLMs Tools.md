@@ -88,6 +88,7 @@ One of our biggest superpowers that we have as humans is the ability to change o
 | I'm a programmer   | I know what makes software work and scale well          |
 | I'm a guitar maker | I know what makes a guitar play well and last for years |
 | I'm a songwriter   | I know what makes a song that an audience loves[^1]     |
+
 If you apply a different spin to how you use any particular thing, then you can make an argument for it being a tool. Or to say it another way: *an automation can become a tool if you shift your level thinking*. Understanding this is key to *surviving* in the Agentic Software Era, but you can combine it with the next strategy to *thrive* in it.
 ## Learn from the output
 
